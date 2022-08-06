@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
+
+
+</head>
+<body>
+
+	<div class="nav">
+      <div class="container">
+	        <ul>
+          <li><a class="btn" href = "index.html">Home</a></li>
+
+		  <li><a class="btn" href = "about.html">About Us</a></li>
+
+		  <li><a class="btn" href = "allPets.html">Current Petitions</a></li>
+         
+          <li><a class="btn" href = "Petition.html">Make a Petition</a></li>
+		  
+		  <li><a class="btn" href = "contact.html">Contact us</a></li>
+
+
+	
+        </ul>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    firebase.initializeApp({
+        apiKey: "AIzaSyCy1dW0zUnQeF5htnOdAV_YSA1ZPek1wOA",
+        authDomain: "politition-petition.firebaseapp.com",
+        databaseURL: "https://politition-petition.firebaseio.com",
+        projectId: "politition-petition",
+        storageBucket: "politition-petition.appspot.com",
+        messagingSenderId: "104845302047"
+    });
+
+    var db = firebase.firestore();
+    var petitionData = db.collection('petitions')
+
+	petitionData.get().then((querySnapshot) => {
+        const container = document.querySelector('.container')
+        
+		querySnapshot.forEach((doc) => {
+            const wrapper = document.createElement('div')
+            const data = doc.data()
+                
+            for (const value of Object.values(data)) {
+                let child = document.createElement('p')
+                child.innerText = value
+                wrapper.appendChild(child)
+            }
+            container.appendChild(document.createElement('Br'))
+            container.appendChild(document.createElement('hr'))
+
+            container.appendChild(wrapper)
+		})
+    })
+
+    //for (var property in petitionData){
+      //  document.write(property + ": " + petitionData[property] + "<br>");
+    //}
+
+    function showMessage(pet) {
+  // get the message object added to Firebase
+  var petition = pet.val();
+  var firstName = petition.firstName;
+  var lastName = petition.lastName;
+  
+
+  var petitionEl = $("<div/>").addClass("petition");
+  var firstNameEl = $("<span/>").text(firstName + ': ');
+  var lastNameEl = $("<span/>").text(lastName);
+
+  // .append adds an element to the end
+  messageEl.append(firstNameEl);
+  messageEl.append(LastNameEl);
+  $('#messages').append(petitionEl);
+}
+</script>
+</html>
